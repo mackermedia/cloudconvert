@@ -11,7 +11,7 @@ module Cloudconvert
 
       #convert request for file
     def convert(inputformat, outputformat, file_path, callback_url = nil, options = {})
-      raise "File path cant be blank" if file_path.nil?
+      raise "File path can't be blank as well as options[:files]" if file_path.nil? && options[:files].blank?
       @convert_request_url = start_conversion(inputformat, outputformat)
       #initiate connection with new response host
       initiate_connection(@convert_request_url)
@@ -93,7 +93,8 @@ module Cloudconvert
     def build_upload_params(file_path, outputformat, callback_url = nil, options = {})
       upload_params = { :format => outputformat}
       upload_params.merge!(:callback => callback(callback_url)) if callback(callback_url).present?
-      upload_params.merge!(:input => "download",:link => file_path )
+      upload_params.merge!(:input => "download")
+      upload_params.merge(:link => file_path) if file_path.present?
       upload_params.merge!(options)
     end
 
