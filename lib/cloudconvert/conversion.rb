@@ -94,7 +94,7 @@ module Cloudconvert
       upload_params = { :format => outputformat}
       upload_params.merge!(:callback => callback(callback_url)) if callback(callback_url).present?
       upload_params.merge!(:input => "download")
-      upload_params.merge(:link => file_path) if file_path.present?
+      upload_params.merge!(:link => file_path) if file_path.present?
       upload_params.merge!(options)
     end
 
